@@ -1,0 +1,36 @@
+
+<div class="row">
+    <div class="col-6">
+        <h1 class="pb-4">Phone Numbers</h1>
+    </div>
+   
+</div>
+
+
+
+<div class="row">
+  <div class="col-12">
+    <ul class="list-group">
+      <li class="list-group-item px-2 px-lg-2 list-group-header">
+      <div class="row">
+        <div class="col-3"><strong>Name</strong></div>
+        <div class="col-2"><strong>Number</strong></div>
+      </li>
+      <% @phone_numbers.each do |phone_number| %>
+      <li class="list-group-item px-2 px-lg-2 py-lg-3">
+        <div class="row">
+          <div class="col-3">
+          <%= link_to phone_number.friendly_name, "phone_numbers/"+phone_number.sid%>
+          </div>
+          <div class="col-2">
+            <span>
+            <%=  phone_number.phone_number %>
+            </span>
+          </div>
+        
+      </li>
+      <% end %>
+    </ul>
+  </di>
+</div>
+

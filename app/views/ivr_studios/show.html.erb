@@ -1,0 +1,305 @@
+<%= stylesheet_link_tag "ivrdata", media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag "jquery_3.6.js" %>
+  <%= javascript_include_tag "raphael.js" %>
+  <%= javascript_include_tag "Treant.js" %>
+  <%= javascript_include_tag "ivrdata.js" %>
+  <%= javascript_include_tag "create_ivr.js" %>
+
+
+<div class="chart" id="ivr_flow_data"></div>
+<div class="modal fade" id="ivrFlowModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectAction">Select Action to perform</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 inputBtnHolder">
+                    <button class="btn btn-primary" id="addBtn" type="button" onclick="addNodeModal();">Add</button>
+                    <button class="btn btn-primary" id="editBtn" type="button" onclick="editNodeModal();">Edit</button>
+                    <button class="btn btn-primary" id="deleteBtn" type="button" onclick="deleteNodeModal();">Delete</button>
+                </div>
+                <div class="col-md-12 addWindow" style="display:none;" id="addWindow_id">
+                    <select class="form-select" id="nodeSelect" aria-label="Default select example"
+                        onchange="createInputAddContainer();">
+                        <option selected>Select any node</option>
+                        <option value="Play">Play</option>
+                        <option value="Say">Say</option>
+                        <option value="Gather">Gather</option>
+                        <option value="Goto">Goto</option>
+                        <option value="Queue">Queue</option>
+                        <option value="Dial">Dial</option>
+                        <option value="Conference">Conference</option>
+                        <option value="Record">Record</option>
+                        <option value="Weekdays">Weekdays</option>
+                        <option value="Timings">Timings</option>
+                        <option value="Hangup">Hangup</option>
+                    </select>
+
+                    <div style="display:none;" id="select-container-play">
+                        <div class="mb-3">
+                            <label class="form-label">Node Name</label>
+                            <input type="text" class="form-control" id="play-name">
+                            
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Play Loop</label>
+                            <input type="number" class="form-control" placeholder="How many time repeat Play" value="1" id="play-loop-count"/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Play URL</label>
+                            <input type="text" class="form-control" id="play-content-text"/>
+                        </div>
+                    </div>
+
+                    <div style="display:none;" id="select-container-say">
+                        <div class="mb-3">
+                            <label class="form-label">Node Name</label>
+                            <input type="text" class="form-control" id="say-name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="select-voice">Select Voice:</label>
+                            <select name="say-voice" id="say-voice" onchange="onSayVoiceSelect()" class="form-control">
+                                <option value="men">Men</option>
+                                <option value="women">Women</option>
+                                <option value="alice">Alice</option>
+                                
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3" id='alice-language-list-div' >
+                            <label for="select-language">Select Language:</label>
+                            <select name="alice-say-language" id="alice-say-language" class="form-control">
+                            <option value="arb">Arabic, Modern Standard</option>
+                            <option value="ar-AR">Arabic, Modern Standard</option>
+                            <option value="ar-XA">Arabic</option> gcloud
+                            <option value="bn-IN">Bengali, India</option> gcloud
+                            <option value="yue-HK">Chinese, Hong Kong</option> gcloud
+                            <option value="cmn-CN">Chinese, Mandarin</option> gcloud
+                            <option value="cmn-TW">Chinese, Mandarin</option> gcloud
+                            <option value="zh-CN">Chinese, Mandarin</option>
+                            <option value="cs-CZ">Czech, Czech Republic</option> gcloud
+                            <option value="cy-GB">Welsh, UK</option>
+                            <option value="da-DK">Danish, Denmark</option>
+                            <option value="de">German, Germany</option>
+                            <option value="de-DE">German, Germany</option>
+                            <option value="en">English, United States</option>
+                            <option value="en-AU">English, Australia</option>
+                            <option value="en-CA">English, Canada</option>
+                            <option value="en-GB">English, UK</option>
+                            <option value="en-GB-WLS">English, Wales</option>
+                            <option value="en-IN">English, India</option>
+                            <option value="en-US">English, United States</option>
+                            <option value="es">Spanish, United States</option>
+                            <option value="es-ES">Spanish, Spain</option>
+                            <option value="es-MX">Spanish, Mexico</option>
+                            <option value="es-US">Spanish, United States</option>
+                            <option value="fil-PH">Filipino, Phillipines</option> gcloud
+                            <option value="fi-FI">Finnish, Finland</option> gcloud
+                            <option value="fr">French, France</option>
+                            <option value="fr-CA">French, Canada</option>
+                            <option value="fr-FR">French, France</option>
+                            <option value="el-GR">Greek, Greece</option> gcloud
+                            <option value="gu-IN">Gujarati, India</option> gcloud
+                            <option value="hi-IN">Hindi, India</option>
+                            <option value="hu-HU">Hungarian, Hungary</option> gcloud
+                            <option value="is-IS">Icelandic, Iceland</option>
+                            <option value="id-ID">Indonesian, Indonesia</option> gcloud
+                            <option value="it">Italian, Italy</option>
+                            <option value="it-IT">Italian, Italy</option>
+                            <option value="ja-JP">Japanese, Japan</option>
+                            <option value="kn-IN">Kannada, India</option> gcloud
+                            <option value="ko-KR">Korean, Korea</option>
+                            <option value="ml-IN">Malayalam, India</option> gcloud
+                            <option value="morse">Morse Code, Dit Dah</option>
+                            <option value="nb-NO">Norwegian, Norway</option>
+                            <option value="nl-NL">Dutch, Netherlands</option>
+                            <option value="pl-PL">Polish, Poland</option>
+                            <option value="pt-BR">Portuguese, Brazil</option>
+                            <option value="pt-PT">Portuguese, Portugal</option>
+                            <option value="ro-RO">Romanian, Romania</option>
+                            <option value="ru-RU">Russian, Russia</option>
+                            <option value="sk-SK">Slovak, Slovakia</option> gcloud
+                            <option value="sv-SE">Swedish, Sweden</option>
+                            <option value="ta-IN">Tamil, India</option> gcloud
+                            <option value="te-IN">Telugu, India</option> gcloud
+                            <option value="th-TH">Thai, Thailand</option> gcloud
+                            <option value="tr-TR">Turkish, Turkey</option>
+                            <option value="uk-UA">Ukrainian, Ukraine</option> gcloud
+                            <option value="vi-VN">Vietnamese, Vietnam</option> gcloud
+                                
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Say Loop</label>
+                            <input type="number" class="form-control" placeholder="How many time repeat Say" value="1" id="say  -loop-count"/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Text to Say</label>
+                            <textarea class="form-control" name="say-content-text" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div style="display:none;" id="select-container-gather">
+                        <div class="mb-3">
+                            <label class="form-label">Node Name</label>
+                            <input type="text" class="form-control" id="gather-name">
+                        </div>
+
+                      
+
+                      <ul class="nav nav-tabs" id="gatherContentTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="say-tab" data-bs-toggle="tab" data-bs-target="#say" type="button" role="tab" aria-controls="say" aria-selected="true">Text To Say</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="play-tab" data-bs-toggle="tab" data-bs-target="#play" type="button" role="tab" aria-controls="play" aria-selected="false">Play URL</button>
+                        </li>
+                       
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="say" role="tabpanel" aria-labelledby="say-tab">
+                            <textarea placeholder="enter text here..." class="form-control" name="gather-say-content-text" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="play" role="tabpanel" aria-labelledby="play-tab">
+                            <input type="text" placeholder="enter play url here..." class="form-control" id="gather-play-content-text"/>
+                        </div>
+                        </div>
+                        <div class="mb-3" id="select-gather-nodes-div">
+                            <select class="form-select" id="select-gather-nodes" aria-label="Default select example"
+                                onchange="createDigitContainer()">
+                                <option selected>Select no of IVR nodes</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                        </div>
+                        <div class="mb-3" id="select-gather-nodes-div-container">
+                        </div>
+
+                    </div>
+                    <div class="mb-3" id="gather-nodes-digit-div-container" style="display:none;">
+                        <input type="text" class="form-control" id="edit-digit-name" placeholder="Enter node name"
+                            value="" />
+                        <input type="number" min="0" name="edit-digit" class="form-control" id="edit-digit" value="" />
+                    </div>
+
+                    <div style="display:none;" id="select-container-hangup">
+                        <div class="mb-3">
+                            <label for="hangup-name" class="form-label">Node Name</label>
+                            <input type="hangup-name" class="form-control" id="hangup-name">
+                        </div>
+                    </div>
+
+                    <div style="display:none;" id="select-container-queue">
+                        <div class="mb-3">
+                            <label for="queue-name" class="form-label">Node Name</label>
+                            <input type="text" class="form-control" id="queue-name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Queue Name</label>
+                            <input class="form-control" name="queue-content" id="queue-content" rows="3"></inpput>
+                        </div>
+                    </div>
+                    <div style="display:none;" id="select-container-record">
+                        <div class="mb-3">
+                            <label for="record-name" class="form-label">Node Name</label>
+                            <input type="text" class="form-control" id="record-name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Record Name</label>
+                            <input class="form-control" name="record-content" id="record-content" rows="3"></inpput>
+                        </div>
+                    </div>
+                    <div style="display:none;" id="select-container-conference">
+                        <div class="mb-3">
+                            <label for="conference-name" class="form-label">Node Name</label>
+                            <input type="text" class="form-control" id="conference-name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Conference Name</label>
+                            <input class="form-control" name="conference-content" id="conference-content" rows="3"></inpput>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 selectBox weekdays" id="select-container-weekdays"
+                        style="display:none; padding:0px;">
+                        <div class="col-md-12" id="select-container-weekdays-name" style="padding:0px; margin-top:1%;">
+                            <div class="col-md-3" style="padding:0px;">Node Name :</div>
+                            <div class="col-md-9" style="padding:0px;">
+                                <input type="text" class="form-control txtRequired" ErrorMessage="Please enter node name" id="txtWeekDaysNodeName" />
+                            </div>
+                            <div id="divWeekDays" >
+                                <div class="col-md-12" style="padding:0px;">Weekdays :</div>
+                                <div class="row">
+                                    <div class="col-md-4"><input type="checkbox" class="weekdays" name="chkSunday" value="Sunday" />Sunday</div>
+                                    <div class="col-md-4"><input type="checkbox" class="weekdays" name="chkMonday"value="Monday" />Monday</div>
+                                    <div class="col-md-4"><input type="checkbox" class="weekdays" name="chkTuesday" value="Tuesday">Tuesday</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"><input type="checkbox" class="weekdays" name="chkWednesday" value="Wednesday" />Wednesday</div>
+                                    <div class="col-md-4"><input type="checkbox" class="weekdays" name="chkThursday" value="Thursday" />Thursday</div>
+                                    <div class="col-md-4"><input type="checkbox" class="weekdays" name="chkFriday" value="Friday">Friday</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"><input type="checkbox" class="weekdays" name="chkSaturday" value="Saturday" />Saturday</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:none;" id="select-container-timings">
+                        <div class="mb-3">
+                            <label class="form-label">Node Name</label>
+                            <input type="text" class="form-control" id="timings-name">
+                        </div>
+                        <div class="mb-3">
+                            <div class="row g-3 align-items-center">
+                                <label class="form-label">Start Time</label>
+                                <input class="form-control" type="time" id="start-time" name="start-time" value="09:00">
+                                <label class="form-label">End Time</label>
+                                <input class="form-control" type="time" id="end-time" name="end-time" value="18:00">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:none;" id="select-container-dial">
+                        <div class="mb-3">
+                            <label for="hangup-name" class="form-label">Node Name</label>
+                            <input type="hangup-name" class="form-control" id="dial-name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Dial Numbers</label>
+                            <input class="form-control" name="dial-content-text" id="dial-content" rows="3"></inpput>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-12 deleteWindow" style="display:none;">
+                    <p>Are you sure to delete the Node....</p>
+                </div>
+                <div class="mb-3" id="goto-nodes-div-container">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="delete-btn" class="btn btn-outline-danger" style="display: none;"
+                    onclick="saveNode('delete');">Delete</button>
+                <button type="button" id="save-btn" class="btn btn-outline-success" style="display: none;"
+                    onclick="saveNode('add');">Save</button>
+                <button type="button" id="edit-btn" class="btn btn btn-outline-secondary" style="display: none;"
+                    onclick="saveNode('edit');">Edit</button>
+                <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,17 @@
+<h3 class="text-muted mb-0">
+  Conversations
+</h3>
+
+<hr class="mt-1">
+
+<% if @conversations.present? %>
+  <nav class="nav flex-column">
+    <% @conversations.each do |conversation| %>
+      <a class="" href="<%= conversation_path(conversation) %>" method='get' data-turbo="false"><%= Contact.find(conversation.contact_id).name%></a>
+    <% end %>
+  </nav>
+<% else %>
+  <div class="text-muted">
+    The are no conversations
+  </div>
+<% end %>

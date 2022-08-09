@@ -1,0 +1,64 @@
+<!--<p style="color: green"><%= notice %></p>
+
+<h1>Ivr studios</h1>
+
+<div id="ivr_studios">
+  <% @ivr_studios.each do |ivr_studio| %>
+    <%= render ivr_studio %>
+    <p>
+      <%= link_to "Show this ivr studio", ivr_studio %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New ivr studio", new_ivr_studio_path %>-->
+
+
+<div class="row">
+    <div class="col-6">
+        <h1 class="pb-4">Ivr Studios</h1>
+    </div>
+    <div class="col-6 text-end">
+        <a class="btn btn-primary btn-sm py-2 px-4 mt-3 me-3 float-end" title="" data-toggle="tooltip" href="/ivr_studios/new" data-bs-original-title="Add a new phone number">+ Add New Ivr Studio</a>
+        
+    </div>
+</div>
+
+
+
+<div class="row">
+  <div class="col-12">
+    <ul class="list-group">
+      <li class="list-group-item px-2 px-lg-2 list-group-header">
+      <div class="row">
+        <div class="col-3"><strong>Name</strong></div>
+        <div class="col-2"><strong>View Ivr Flow</strong></div>
+        <div class="col-1"><strong>Action</strong></div>
+      </li>
+      <% @ivr_studios.each do |ivr_studio| %>
+      <li class="list-group-item px-2 px-lg-2 py-lg-3">
+        <div class="row">
+          <div class="col-3">
+          <span><%= ivr_studio.name%></span></div>
+          <div class="col-2">
+            <span>
+            <%= link_to "Show IvrFlow", ivr_studio, data: { turbo: "false" }%>
+            </span>
+          </div>
+          
+          <div class="col-1">
+            <div class="copyable-container">
+              <span>
+                <%= link_to "Delete", ivr_studio, method: :delete, data: {
+                          "turbo-method": :delete
+                        } %>
+              </span>
+            </div>
+          </div>
+          </div>
+      </li>
+      <% end %>
+    </ul>
+  </di>
+</div>
+

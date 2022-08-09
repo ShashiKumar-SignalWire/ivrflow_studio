@@ -1,0 +1,10 @@
+Add or Edid ProjectId and Token
+<%= form_with url: "/update_sw_api_keys", method: :post do |f|%>
+    <%= f.label :project_id %><br>
+    <%= f.text_field :project_id%><br>
+    <%= f.label :space_url%><br>
+    <%= f.text_field :space_url %><br>
+    <%= f.label :token%><br>
+    <%= f.text_field :token %><br>
+    <%= f.submit %>
+<%end%>

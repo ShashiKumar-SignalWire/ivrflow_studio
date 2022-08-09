@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-6">
+        <h1 class="pb-4">Contacts</h1>
+    </div>
+    <div class="col-6 text-end">
+        <!--<a class="btn btn-primary btn-sm py-2 px-4 mt-3 me-3 float-end" title="" data-toggle="tooltip" href="/contacts/new" data-bs-original-title="Add a new phone number">+ Add New Contact</a>-->
+        <%= link_to "+ Add New contact", new_contact_path,:class =>"btn btn-primary" %>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <ul class="list-group">
+      <li class="list-group-item px-2 px-lg-2 list-group-header">
+      <div class="row">
+        <div class="col-4"><strong>Name</strong></div>
+        <div class="col-3"><strong>Number</strong></div>
+        <div class="col-2">Action</div></div>
+      </li>
+      <% @contacts.each do |contact| %>
+      <li class="list-group-item px-2 px-lg-2 py-lg-3">
+        <div class="row">
+          <div class="col-4">
+          <span><%= contact.name%></span></div>
+          <div class="col-3">
+            <div class="copyable-container"><span><%= contact.number %></span></div>
+          </div>
+          <div class="col-2">
+              <span><%= link_to "Edit", edit_contact_path(contact) %>
+              
+          </div>
+          </div>
+      </li>
+      <% end %>
+    </ul>
+  </di>
+</div>
+
+
+

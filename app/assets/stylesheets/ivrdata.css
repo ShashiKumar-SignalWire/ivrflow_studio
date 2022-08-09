@@ -1,0 +1,87 @@
+/*--------------------------------------*/
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* optional Container STYLES */
+.chart {
+    height: calc(100vh - 60px); margin: 0px; width: 100%;
+}
+
+
+
+.node_ivr_flow_data {
+    padding: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #f5f5f7;
+    border: 2px solid #c4b8e0;
+    width: 125px;
+    font-family: Tahoma;
+    font-size: 12px;
+    height: 50px;
+}
+
+.node_ivr_flow_data.selected {
+    border: 1px solid #000;
+}
+
+.node_ivr_flow_data img {
+    margin-right: 10px;
+}
+
+div.node_ivr_flow_data p {
+    text-align: center;
+}
+
+.inputBtnHolder button {
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 1%;
+}   
+/* required LIB STYLES */
+/* .Treant se automatski dodaje na svaki chart conatiner */
+.Treant {
+    position: relative;
+    padding: 0 !important;
+}
+
+    .Treant > .node,
+    .Treant > .pseudo {
+        position: absolute;
+        display: block;
+        visibility: hidden;
+    }
+
+    .Treant.Treant-loaded .node,
+    .Treant.Treant-loaded .pseudo {
+        visibility: visible;
+    }
+
+    .Treant > .pseudo {
+        width: 0;
+        height: 0;
+        border: none;
+        padding: 0;
+    }
+
+    .Treant .collapse-switch {
+        width: 3px;
+        height: 3px;
+        display: block;
+        border: 1px solid black;
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        cursor: pointer;
+    }
+
+    .Treant .collapsed .collapse-switch {
+        background-color: #868DEE;
+    }
+/*-------------------------------------------*/ 
+
+

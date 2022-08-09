@@ -1,0 +1,31 @@
+<div class="row">
+   <div class="col-12">
+      <h1>Welcome <%=current_user.name %></h1>
+      <%= link_to "Edit  Details", user_edit_path %><br>
+   </div>
+</div>
+
+
+<div class="col-12 col-md-6 col-lg-4">
+    <% if current_user.sw_api_key.nil? %>   
+        <%= link_to "Add API Token", user_edit_sw_api_keys_path %><br> 
+    <%else%>
+    <small class="d-block fw-bold text-uppercase pt-3 pb-2">Space UR</small>
+      <div class="copyable-container">
+         <span ><%= current_user.sw_api_key.space_url%> </span>
+      </div>
+      <small class="d-block fw-bold text-uppercase pt-3 pb-2">ProjectId</small>
+      <div class="copyable-container">
+         <span><%= current_user.sw_api_key.project_id%></span>
+      </div>
+      <small class="d-block fw-bold text-uppercase pt-3 pb-2">Token</small>
+      <div class="copyable-container">
+         <span>PT********************************************</span>
+      </div>
+   </div>
+   <%= link_to "Edit API Token", user_edit_sw_api_keys_path %><br> 
+    <%end%>
+      
+
+
+

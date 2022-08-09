@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IvrStudio</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.5.8/js/jsplumb.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+    
+
+
+.helium {
+  font-family: 'Montserrat', sans-serif; 
+  
+}
+
+
+.list-group-header {
+  background-color: #ececec
+}
+.helium-container {
+      margin: 0 auto;
+      min-height: 100%;
+}
+  
+
+
+.helium-top {
+  height: calc($top-nav-height - 1px);
+  background: #f4f7fa;
+  z-index: 1021;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+}
+  
+  .helium-body{
+    position: sticky;
+    
+  }
+  .branding {
+  display: flex;
+  height: 56px;
+  align-items: center;
+  }
+  
+  .helium-top-right-wrapper {
+      display: flex;
+      align-items: center;
+      flex-direction: row-reverse;
+      padding: 0 10px;
+      height: 100%;
+  }
+  
+  
+   .helium-nav {
+      border-right: 1px solid #ddd;
+      background: #f4f7fa;
+  }
+  
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  
+  .helium-nav li a {
+    display: block;
+    color: #000;
+    padding: 15px 16px;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  
+  
+  li a.active {
+    background-color: #044ef4;
+    color: white;
+  }
+  nav{
+    height: calc(100vh - 65px);
+  }
+   .helium-content{
+      padding-top: 30px;
+      min-height: 75vh;
+      /* margin-bottom: 20rem; */
+  }
+  
+  .pb-4 {
+      padding-bottom: 1.5rem !important;
+  }
+  .modal {
+    position: absolute;
+     top: 10px;
+     right: 100px;
+     bottom: 0;
+     left: 0;
+     z-index: 10040;
+     overflow: auto;
+  }
+  .modal-backdrop {
+    display: none;
+    height: calc(100vh - 80px);
+  }
+  
+      </style>
+
+  </head>
+
+  <body class="helium"  >
+  <%= render "layouts/flash"%>
+  <div class="main-container">
+  <% if logged_in? %>
+    <div class="helium-top">
+            <div class="row">
+               <div class="col-6">
+                  <div class="branding">
+                     <div class="ps-4"><h4>Signalwire</h4></div>
+                  </div>
+               </div>
+               <div class="col-6">
+                  <div class="helium-top-right-wrapper">
+                     <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#"><%=current_user.name %></a>
+                     <div class="dropdown-menu dropdown-menu-right">
+                     <%= link_to "Log out", logout_path, data: {
+                      "turbo-method": :delete
+                     }, class: "dropdown-item" %>
+                     <!--<a class="dropdown-item" rel="nofollow" data-method="delete" method="delete" href="/logout">Log out</a>-->
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+  </div>
+
+
+  <div class="helium-body">
+  <div class="helium-container" >
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-12 col-lg-2 helium-nav navbar-expand-lg p-0">
+          <nav class="collapse d-lg-block" id="navExpand">
+            <ul>
+            <% if controller_name == 'users' %>
+              <li ><a class= "active" href="/">Profile</a></li>
+            <%else%>
+              <li ><a class= "" href="/">Profile</a></li>
+            <%end%>
+            <% if controller_name == 'phone_numbers' %>
+              <li  ><a class="active" href="/phone_numbers">Phone Numbers</a></li>
+            <%else%>
+              <li  ><a class="" href="/phone_numbers">Phone Numbers</a></li>
+            <%end%>
+            <% if controller_name == 'ivr_studios' %>
+              <li  ><a class="active" href="/ivr_studios" data-turbo="false">Ivr Studios</a></li>
+            <%else%>
+              <li  ><a class="" href="/ivr_studios" data-turbo="false">Ivr Studios</a></li>
+            <%end%>
+            <% if controller_name == 'contacts' %>
+              <li  ><a class="active" href="/contacts">Contacts</a></li>
+            <%else%>
+              <li  ><a class="" href="/contacts">Contacts</a></li>
+            <%end%>
+            <% if controller_name == 'conversations'%>
+              <li  ><a class="active" href="/conversations" method='get' data-turbo="false" >Conversations</a></li>
+            <%else%>
+              <li  ><a class="" href="/conversations" method='get' data-turbo="false">Conversations</a></li>
+            <%end%>
+                
+            </ul>
+          </nav>
+        </div>
+        <div class="col-12 col-lg-10">
+          <div class="helium-content">
+            <div class="container-fluid">
+            <%= yield %>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  s<% else %>
+<%= yield %>
+<% end %>
+  </div>
+
+
+
+</body>
+</html>

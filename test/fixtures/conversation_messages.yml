@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  conversation: one
+  message: MyText
+  message_sid: MyString
+  direction: MyString
+
+two:
+  conversation: two
+  message: MyText
+  message_sid: MyString
+  direction: MyString
