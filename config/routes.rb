@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   resources :ivr_studios
   resources :users, only: [:new, :create,:update]
   resources :phone_numbers
+  resources :voice_campaigns
+  resources :message_campaigns
 
   
   resources :contacts
@@ -17,6 +19,7 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   post 'update_sw_api_keys', to: "users#update_sw_api_keys"
+  delete 'user/delete_sw_api_keys', to: "users#delete_sw_api_keys"
   get 'authorized', to: 'sessions#page_requires_login'
   delete "logout", to: "sessions#destroy"
   put 'update_ivr_flow/:id', to: "ivr_studios#update_ivr_flow"

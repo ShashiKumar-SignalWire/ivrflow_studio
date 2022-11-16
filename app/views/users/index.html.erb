@@ -1,30 +1,39 @@
-<div class="row">
+<div class="row mb-3">
    <div class="col-12">
-      <h1>Welcome <%=current_user.name %></h1>
-      <%= link_to "Edit  Details", user_edit_path %><br>
+      <h5>Welcome <%=current_user.name %>
+      <%= link_to "", user_edit_path , :class => "fa fa-pencil ms-2 fs-6 text-muted"%>
+      </h5>
    </div>
 </div>
 
-
-<div class="col-12 col-md-6 col-lg-4">
+<div class="row mb-3">
     <% if current_user.sw_api_key.nil? %>   
-        <%= link_to "Add API Token", user_edit_sw_api_keys_path %><br> 
+    <div class="col-12 col-md-4 col-lg-4">
+        <%= link_to "Add API Token", user_edit_sw_api_keys_path %>
+        </div>
     <%else%>
-    <small class="d-block fw-bold text-uppercase pt-3 pb-2">Space UR</small>
-      <div class="copyable-container">
-         <span ><%= current_user.sw_api_key.space_url%> </span>
-      </div>
-      <small class="d-block fw-bold text-uppercase pt-3 pb-2">ProjectId</small>
-      <div class="copyable-container">
-         <span><%= current_user.sw_api_key.project_id%></span>
-      </div>
-      <small class="d-block fw-bold text-uppercase pt-3 pb-2">Token</small>
-      <div class="copyable-container">
-         <span>PT********************************************</span>
-      </div>
+    <div class="col-12 col-md-4 col-lg-4">
+     <small class="d-block fw-semibold  mb-1 text-secondary">Space URL</small>
+         <span><%= current_user.sw_api_key.space_url%> </span>
    </div>
-   <%= link_to "Edit API Token", user_edit_sw_api_keys_path %><br> 
-    <%end%>
+   <div class="col-12 col-md-4 col-lg-4">
+      <small class="d-block fw-semibold  mb-1 text-secondary">ProjectId</small>
+      <span><%= current_user.sw_api_key.project_id%></span>
+   </div>
+   <div class="col-12 col-md-4 col-lg-4">
+      <small class="d-block fw-semibold  mb-1 text-secondary">Token</small>
+         <span>PT********************************************</span>
+   </div>
+</div>
+
+<%= link_to "Edit", user_edit_sw_api_keys_path , :class => "btn btn-sm btn-primary" %>
+
+<span class="ms-1">
+               <%= link_to "Delete", user_delete_sw_api_keys_path, :class => "btn btn-sm btn-danger", method: :delete, data: {
+                        "turbo-method": :delete
+                     } %>
+            </span>
+   <%end%>
       
 
 

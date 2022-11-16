@@ -1,0 +1,2 @@
+module MessageCampaignsHelper
+end

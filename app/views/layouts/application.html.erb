@@ -14,104 +14,345 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-    
+    .helium {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .list-group-header {
+            background-color: #ececec
+        }
+
+        .helium-container {
+            margin: 0 auto;
+            min-height: 100%;
+        }
+
+        .helium-top {
+            height: calc($top-nav-height - 1px);
+            background: #f4f7fa;
+            z-index: 1021;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+        }
+
+        .helium-body {
+            position: sticky;
+        }
+
+        .branding {
+            display: flex;
+            height: 56px;
+            align-items: center;
+        }
+
+        .helium-top-right-wrapper {
+            display: flex;
+            align-items: center;
+            flex-direction: row-reverse;
+            padding: 0 10px;
+            height: 100%;
+        }
+
+        .helium-nav {
+            border-right: 1px solid #ddd;
+            background: #f4f7fa;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .helium-nav li a {
+            display: block;
+            color: #000;
+            padding: 15px 16px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        li a.active {
+            background-color: #044ef4;
+            color: white;
+        }
+
+        nav {
+            height: calc(100vh - 65px);
+        }
+
+        .helium-content {
+            padding-top: 20px;
+            min-height: 75vh;
+            /* margin-bottom: 20rem; */
+        }
+
+        .pb-4 {
+            padding-bottom: 1.5rem !important;
+        }
+
+        .modal {
+            position: absolute;
+            top: 10px;
+            right: 100px;
+            bottom: 0;
+            left: 0;
+            z-index: 10040;
+            overflow: auto;
+        }
+
+        .modal-backdrop {
+            display: none;
+            height: calc(100vh - 80px);
+        }
 
 
-.helium {
-  font-family: 'Montserrat', sans-serif; 
-  
-}
+        .chat-message-container {
+            padding: 5px;
+        }
 
+        .chat-message-container .avatar {
+            margin: 5px;
+        }
 
-.list-group-header {
-  background-color: #ececec
-}
-.helium-container {
-      margin: 0 auto;
-      min-height: 100%;
-}
-  
+        .chat-message-container .message-content {
+            padding: 5px;
+            border: 1px solid #0d6efd;
+            border-radius: 5px;
+            background: #408cfd;
+            color: #fff;
+        }
 
+        .chat-message-container+.chat-message-container {
+            margin-top: 10px;
+        }
 
-.helium-top {
-  height: calc($top-nav-height - 1px);
-  background: #f4f7fa;
-  z-index: 1021;
-  border-bottom: 1px solid #ddd;
-  position: sticky;
-  top: 0;
-}
-  
-  .helium-body{
-    position: sticky;
-    
-  }
-  .branding {
-  display: flex;
-  height: 56px;
-  align-items: center;
-  }
-  
-  .helium-top-right-wrapper {
-      display: flex;
-      align-items: center;
-      flex-direction: row-reverse;
-      padding: 0 10px;
-      height: 100%;
-  }
-  
-  
-   .helium-nav {
-      border-right: 1px solid #ddd;
-      background: #f4f7fa;
-  }
-  
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  
-  .helium-nav li a {
-    display: block;
-    color: #000;
-    padding: 15px 16px;
-    text-decoration: none;
-    font-size: 16px;
-  }
-  
-  
-  
-  li a.active {
-    background-color: #044ef4;
-    color: white;
-  }
-  nav{
-    height: calc(100vh - 65px);
-  }
-   .helium-content{
-      padding-top: 30px;
-      min-height: 75vh;
-      /* margin-bottom: 20rem; */
-  }
-  
-  .pb-4 {
-      padding-bottom: 1.5rem !important;
-  }
-  .modal {
-    position: absolute;
-     top: 10px;
-     right: 100px;
-     bottom: 0;
-     left: 0;
-     z-index: 10040;
-     overflow: auto;
-  }
-  .modal-backdrop {
-    display: none;
-    height: calc(100vh - 80px);
-  }
+        .room-nav-link {
+            border: 1px solid #d7e7ff;
+            background: #f1f6ff;
+        }
+
+        .room-nav-link+.room-nav-link {
+            border-top: 0 none;
+        }
+
+        .chat {
+            border: 1px solid #d8dbdd;
+            background: #f3f4f5;
+            height: 50vh;
+            border-radius: 5px 5px 0 0;
+            overflow-y: auto;
+        }
+
+        .chat-input {
+            border-top: 0 none;
+            border-radius: 0 0 5px 5px;
+        }
+
+        /*Mahi Styles - Chat Panel*/
+
+        .chat_conver .lite {
+            padding: 12px 15px 10px
+        }
+
+        .chat_conver {
+            background: #eff1f4;
+            display: block;
+            height: 100%;
+            position: relative;
+            padding-left: 0px;
+            padding-right: 0px
+        }
+
+        .chat_header {
+            border-bottom: 1px solid #dfe3fa;
+            margin-left: -15px;
+            padding: 10px 15px
+        }
+
+        .chat_contact {
+            padding: 15px 0px 15px 15px;
+            position: relative;
+            height: calc(100% - 80px)
+        }
+
+        .chat_content {
+            position: relative;
+            padding: 0px 15px 15px 15px;
+            display: block;
+            margin-bottom: 10px
+        }
+
+        .chat_panel {
+            height: 100%;
+            overflow: hidden;
+            
+        }
+
+        .search_field input {
+            background: #eff1f4;
+            font-size: 11px;
+            border-radius: 6px !important
+        }
+
+        .search_field i {
+            font-size: 11px;
+            color: #101b4f
+        }
+
+        .chat_header_links {
+            margin-right: 15px;
+            padding: 0px;
+            float: right;
+            margin-bottom: 0px
+        }
+
+            .chat_header_links li {
+                list-style-type: none;
+                margin-right: 15px;
+                font-size: 13px;
+                color: #585858;
+                float: left;
+            }
+
+                .chat_header_links li.divider {
+                    color: #d5d5d5
+                }
+
+                .chat_header_links li a {
+                    color: #3b77ff
+                }
+
+        .contact_list {
+            margin: 0px;
+            padding: 0px
+        }
+
+            .contact_list li {
+                list-style-type: none;
+                border-bottom: 1px solid #eff1f4;
+                color: #9b9b9b;
+                font-size: 12px;
+                margin-bottom: 15px;
+                padding: 10px
+            }
+
+                .contact_list li .name {
+                    color: #2c2c2c;
+                    font-size: 13px;
+                    font-weight: normal
+                }
+
+                .contact_list li .msg_time {
+                    color: #a4a9bd;
+                    font-size: 11px;
+                }
+
+                .contact_list li p {
+                    margin-bottom: 0px
+                }
+
+                .contact_list li.active {
+                    background: #3b77ff;
+                    color: #ffffff;
+                    border-radius: 10px 0px 0px 10px !important;
+                    /*margin-right: -15px*/
+                }
+
+                    .contact_list li.active .name, .contact_list li.active .msg_time {
+                        color: #ffffff;
+                    }
+
+                    .contact_list li.active .name {
+                        font-weight: bold
+                    }
+
+        .chat_box {
+            background: #fff;
+            padding: 15px;
+            border-radius: 4px !important;
+            width: 90%;
+            margin: auto
+        }
+
+            .chat_box input.form-control {
+                border: none;
+                padding: 0px;
+                height: auto
+            }
+
+            .chat_box span img {
+                cursor: pointer
+            }
+
+        .user_msg {
+            background: #3b77ff;
+            padding: 15px;
+            color: #fff;
+            font-size: 12px;
+            max-width: 60%;
+            border-radius: 0 20px 20px 20px !important;
+        }
+
+        .user_msg_time {
+            color: #A4A4A4;
+            font-size: 11px;
+        }
+
+        .self_msg {
+            background: #788998;
+            padding: 15px;
+            color: #fff;
+            font-size: 12px;
+            max-width: 60%;
+            border-radius: 20px 0px 20px 20px !important
+        }
+
+        .chat_right {
+            display: block;
+            height: 100%
+        }
+
+        .chat_other {
+            display: block;
+            height: calc(50% - 100px);
+            overflow-y: auto
+        }
+
+        .chat_right h4 {
+            background: #eef3ff;
+            padding: 10px;
+            color: #3b77ff;
+            box-shadow: 0 2px 4px 0 rgba(231, 231, 231, 0.5);
+            font-size: 14px;
+            font-weight: 600
+        }
+
+        .new_msg {
+            color: #2c2c2c;
+            font-weight: 600;
+            font-size:13px;
+        }
+
+            .new_msg label {
+                background: #3b77ff;
+                color: #fff;
+                border-radius: 50px !important;
+                padding: 3px 6px;
+                font-size: 11px;
+                margin-left: 10px;
+            }
+
+            .clearfix{
+                clear:both;
+            }
+            .pull-left{
+                float:left;
+            }
+            .pull-right{
+                float:right
+            }
   
       </style>
 
@@ -176,6 +417,16 @@
             <%else%>
               <li  ><a class="" href="/conversations" method='get' data-turbo="false">Conversations</a></li>
             <%end%>
+            <% if controller_name == 'voice_campaigns'%>
+              <li  ><a class="active" href="/voice_campaigns" method='get' data-turbo="false" >Voice Campaigns</a></li>
+            <%else%>
+              <li  ><a class="" href="/voice_campaigns" method='get' data-turbo="false">Voice Campaigns</a></li>
+            <%end%>
+            <% if controller_name == 'message_campaigns'%>
+                <li  ><a class="active" href="/message_campaigns" method='get' data-turbo="false" >Message Campaigns</a></li>
+            <%else%>
+                <li  ><a class="" href="/message_campaigns" method='get' data-turbo="false">Message Campaigns</a></li>
+            <%end%>
                 
             </ul>
           </nav>
@@ -192,7 +443,7 @@
     </div>
   </div>
 
-  s<% else %>
+<% else %>
 <%= yield %>
 <% end %>
   </div>

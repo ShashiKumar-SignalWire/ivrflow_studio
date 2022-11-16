@@ -1,11 +1,12 @@
 class ConversationsController < ApplicationController
-    before_action :load_entities
     skip_before_action :verify_authenticity_token, only: %i[ message_webhook]
     skip_before_action :authorized, only: [:message_webhook]
   def index
-    @conversations = Conversation.all
+    @conversations = current_user.conversations.all
   end
   def show
+    @conversations = current_user.conversations.all
+    @conversation = Conversation.find(params[:id]) if params[:id]
     @conversation_message = ConversationMessage.new conversation: @conversation
     @conversation_messages = @conversation.conversation_messages.includes(:conversation)
   end
@@ -37,12 +38,4 @@ class ConversationsController < ApplicationController
       render xml: response
     end
  end
-  protected
-
-  def load_entities
-    @conversations = Conversation.all
-    @conversation = Conversation.find(params[:id]) if params[:id]
-  end
-  
-
 end

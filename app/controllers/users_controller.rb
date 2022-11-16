@@ -25,10 +25,14 @@ class UsersController < ApplicationController
  
 
   def update
-    @user = current_user
-    puts user_params
+    @user = User.find(current_user.id)
+    
     respond_to do |format|
+      puts "*****************111111***************************************"
+      puts user_params
+      puts "*****************22222***************************************"
       if @user.update(user_params)
+        puts "JJJJJJJJJJJJJJJJJJJJJJJJJs"
         format.html { redirect_to root_path, success: "User was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -40,6 +44,7 @@ class UsersController < ApplicationController
   end
   def edit_sw_api_keys
   end
+  
   def update_sw_api_keys
     if current_user.sw_api_key.nil?
       current_user.create_sw_api_key(:project_id => params["project_id"],:token => params["token"],:space_url =>params["space_url"] )
@@ -49,8 +54,14 @@ class UsersController < ApplicationController
     flash[:success] = "updated Successfully..."
     redirect_to root_path
   end
+  def delete_sw_api_keys
+    if current_user.sw_api_key.destroy
+      flash[:success] = "Deleted Successfully..."
+      redirect_to root_path
+    end
+  end
   private
     def user_params
-      params.require(:user).permit(:name)
+        params.require(:user).permit(:name)
     end
 end

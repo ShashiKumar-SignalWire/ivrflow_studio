@@ -1,70 +1,41 @@
-<h1>
-  <%= @conversation.id %>
-</h1>
-
-<div class="row">
-  <div class="col-12 col-md-3">
-    <%= render partial: 'conversations' %>
-  </div>
-
-  <div class="col">
-    <div class="chat" data-channel-subscribe="conversation"  id="conversation-room-id" data-conversation-id="<%= @conversation.conversation_room_id %>">
-      <% @conversation_messages.each do |conversation_message| %>
-        <div class="chat-message-container">
-          <div class="row no-gutters">
-            <div class="col-auto text-center">
-            </div>
-            <div class="col">
-              <div class="message-content">
-                <p class="mb-1">
+<div class="row chat_panel">
+  <%= render partial: 'conversations' %>
+  <div class="col-sm-9 chat_conver">
+      
+      <div class="chat_content" style=" height: calc(100vh - 200px); overflow-y: auto; " data-channel-subscribe="conversation"  id="conversation-room-id" data-conversation-id="<%= @conversation.conversation_room_id %>">
+          <% @conversation_messages.each do |conversation_message| %>
+            <div class="clearfix mt-3">
+                <div class="user_msg <%= conversation_message.direction == 'outbound' ? 'pull-right' : 'pull-left' %>">
                   <%= conversation_message.message %>
-                </p>
-                <div class="text-right">
-                  <small>
-                    <%= conversation_message.created_at %>
-                  </small>
                 </div>
-              </div>
+                <% if conversation_message.direction != 'outbound' %>
+                <span class="<%= conversation_message.direction == 'outbound' ? 'pull-right' : 'pull-left' %> ms-3 user_msg_time"><%= conversation_message.created_at.strftime("%I:%M%p") %></span>
+                <% end %>
             </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-
-    <%= form_for @conversation_message, remote: true do |form| %>
-      <div class="input-group mb-3">
-        <%= form.text_field :message, as: :string,
-                                 wrapper: false,
-                                 label: false,
-                                 input_html: {
-                                   class: 'chat-input',
-                                   autocomplete: 'off'
-                                 } %>
-        <div class="input-group-append">
-        <%= form.hidden_field :conversation_id %>
-          <%= form.submit "Send", class: 'btn btn-primary chat-input' %>
-        </div>
+          <% end %>
       </div>
-    <% end %>
+      <%= form_for @conversation_message, remote: true do |form| %>
+      <div class="chat_box d-flex clearfix">
+          <div class="col-sm-11 ps-0">
+              <input type="text" placeholder="Type Here" class="form-control" name="conversation_message[message]" id="conversation_message_message">
+          </div>
+          <%= form.hidden_field :conversation_id %>
+          <div class="col-sm-1 text-end pe-0">
+              <button>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#3b77ff" class="bi bi-send-fill" viewBox="0 0 16 16">
+                    <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
+                </svg>
+              </button>
+          </div>
+      </div>
+      <%end%>
   </div>
 </div>
 
 <div class="d-none" data-role="message-template">
-  <div class="chat-message-container">
-    <div class="row no-gutters">
-
-      <div class="col">
-        <div class="message-content">
-          <p class="mb-1" data-role="message-text">
-
-          </p>
-
-          <div class="text-right">
-            <small data-role="message-date">
-            </small>
-          </div>
-        </div>
-      </div>
+  <div class="clearfix">
+    <div class="user_msg" data-role="message-text" >
     </div>
+    <span class=" ms-3 user_msg_time" data-role="message-date"></span>
   </div>
 </div>

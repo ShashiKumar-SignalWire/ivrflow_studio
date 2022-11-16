@@ -1,39 +1,39 @@
-<div class="row">
+<div class="row mb-3">
    <div class="col-12">
-      <h1><%= @phone_number.friendly_name %></h1>
-   </div>
-</div>
-<div class="row pt-5 pb-5">
-   <div class="col-12 col-md-6 col-lg-4">
-      <small class="d-block fw-bold text-uppercase pt-3 pb-2">Number</small>
-      <div class="copyable-container">
-         <span ><%= @pn.to_s%> </span>
-      </div>
-      <small class="d-block fw-bold text-uppercase pt-3 pb-2">E.164</small>
-      <div class="copyable-container">
-         <span><%= @pn.format("+ %c (%a) %n")%></span>
-      </div>
-   </div>
-   <div class="col-12 col-md-6 col-lg-4">
-      <small class="d-block fw-bold text-uppercase pt-3 pb-2">IVR Studio</small>
-      <div class="copyable-container">
-        <% ivr_studo_webapplication = IvrStudio.find_by_webapplication_sid(@phone_number.voice_application_sid)%>
-         <span ><%= ivr_studo_webapplication.nil? ? "Not confugired" : IvrStudio.find_by_webapplication_sid(@phone_number.voice_application_sid).name %> </span>
-      </div>
-      <small class="d-block fw-bold text-uppercase pt-3 pb-2">Message Application</small>
-      <div class="copyable-container">
-         <span>Not implemented</span>
-      </div>
+      <h5><%= @phone_number.friendly_name %></h5>
    </div>
 </div>
 
-<div class="row pt-5">
-   <div class="col-12 col-lg-8">
+<div class="row mb-3">
+   
+    <div class="col-12 col-md-4 col-lg-4">
+     <small class="d-block fw-semibold  mb-1 text-secondary">Number</small>
+         <span> <%= @pn.to_s%> </span>
+   </div>
+   <div class="col-12 col-md-4 col-lg-4">
+      <small class="d-block fw-semibold  mb-1 text-secondary">E.164</small>
+      <span><%= @pn.format("+ %c (%a) %n")%></span>
+   </div>
+   <div class="col-12 col-md-4 col-lg-4">
+      <small class="d-block fw-semibold  mb-1 text-secondary">IVR Studio</small>
+      <% ivr_studo_webapplication = IvrStudio.find_by_webapplication_sid(@phone_number.voice_application_sid)%>
+      <span ><%= ivr_studo_webapplication.nil? ? "Not confugired" : IvrStudio.find_by_webapplication_sid(@phone_number.voice_application_sid).name %> </span>
+   </div>
+</div>
+</br>
+</br>
+
+<div class="row mb-4">
+   <div class="col-12 col-md-4 col-lg-4">
       <h2 class="h5">Edit Settings</h2>
       <div class="text-muted">Change the actions taken when this number receives an incoming phone call or message.</div>
    </div>
-   <div class="col-12 col-lg-4">
-      <div class="text-lg-end mt-3"><%= link_to "Edit Settings", edit_phone_number_path %><br></div>
-       
+   <div class="col-12 col-md-4 col-lg-4">
+   <div class="text-lg-end mt-3"><%= link_to "Edit Settings", edit_phone_number_path,:class => "btn btn-sm btn-primary" %><br></div>
    </div>
 </div>
+
+      
+
+
+

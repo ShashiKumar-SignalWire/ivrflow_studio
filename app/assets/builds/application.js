@@ -17519,12 +17519,17 @@
           console.log(element2);
           var $element = $(element2);
           messageTemplate = $('[data-role="message-template"]');
-          console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-          console.log(messageTemplate);
-          console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
           var content = messageTemplate.children().clone(true, true);
           content.find('[data-role="message-text"]').text(data.message);
-          content.find('[data-role="message-date"]').text(data.updated_at);
+          if (data.direction == "outbound") {
+            content.find('[data-role="message-text"]').addClass("pull-right");
+          } else {
+            let created_at = new Date(data.updated_at);
+            let localtime = created_at.toLocaleTimeString("en-US", { hour12: true });
+            content.find('[data-role="message-text"]').addClass("pull-left");
+            content.find('[data-role="message-date"]').text(localtime);
+            content.find('[data-role="message-date"]').addClass("pull-left");
+          }
           $element.append(content);
           $element.animate({ scrollTop: $element.prop("scrollHeight") }, 1e3);
         });
@@ -17538,6 +17543,9 @@
       $(this).find('input[type="text"]').val("");
     });
   });
+  $(".alert").fadeOut(3e3);
+  $(".alert-success").fadeOut(3e3);
+  $(".alert-danger").fadeOut(3e3);
 })();
 /*!
   * Bootstrap v5.2.0 (https://getbootstrap.com/)

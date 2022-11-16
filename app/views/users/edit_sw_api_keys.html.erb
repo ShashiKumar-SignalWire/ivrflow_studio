@@ -1,10 +1,29 @@
-Add or Edid ProjectId and Token
+<div class="row mb-3">
+   <div class="col-12">
+      <h5>Add or Edit ProjectId and Token</h5>
+   </div>
+</div>
+
 <%= form_with url: "/update_sw_api_keys", method: :post do |f|%>
-    <%= f.label :project_id %><br>
-    <%= f.text_field :project_id%><br>
-    <%= f.label :space_url%><br>
-    <%= f.text_field :space_url %><br>
-    <%= f.label :token%><br>
-    <%= f.text_field :token %><br>
-    <%= f.submit %>
+    <div class="col-12 col-md-4">
+        <div class="">
+            <div class="form-group">
+                <%= f.label :project_id, :class=> "fw-semibold text-secondary mb-1" %><br>
+                <%= f.text_field :project_id, required: true, placeholder: "Project Id",:class=> "form-control"%><br>
+            </div>
+        </div>
+        <div class="">
+            <div class="form-group">
+                <%= f.label :space_url, :class=> "fw-semibold text-secondary mb-1" %><br>
+                <%= f.text_field :space_url , required: true,placeholder: "example.signalwire.com" ,:class=> "form-control "%><br>
+            </div>
+        </div>
+        <div class="">
+            <div class="form-group">
+                <%= f.label :token, :class=> "fw-semibold text-secondary mb-1" %><br>
+                <%= f.text_field :token , required: true, placeholder: "Token" ,:class=> "form-control"%><br>
+            </div>
+        </div>
+    </div>
+    <%= submit_tag "Add or Edit" ,:class=> "btn btn-primary btn-sm btn-block"%>
 <%end%>

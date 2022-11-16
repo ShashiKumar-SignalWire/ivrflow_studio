@@ -1,10 +1,17 @@
-Update Number 
+<div class="row mb-3">
+   <div class="col-12">
+      <h5>Update Number</h5>
+   </div>
+</div>
+
 <%= form_with url:phone_number_path, method: :put do |f|%>
-    <%= f.label :friendly_name %><br>
-    <%= f.text_field :friendly_name, value:@phone_number.friendly_name,:class =>"form-control" %><br>
-    <%= f.label :ivr_studio%><br>
-    <%= select_tag "webapplication_sid", options_for_select(current_user.ivr_studios.all.collect{ |u| [u.name, u.webapplication_sid]},@default_webapplication_sid), {:class =>"form-control"} %>
-    <%= f.label :message_setting%><br>
-    <%= select_tag "message_webhook", raw("<option value='conversation'>Conversation</option><option value='select' selected='selected'>Select</option>"),{:class =>"form-control"}  %>
-    <%= f.submit %>
+    <div class="col-12 col-md-4">
+        <%= f.label :friendly_name %><br>
+        <%= f.text_field :friendly_name, value:@phone_number.friendly_name,:class =>"form-control" %><br>
+        <%= f.label :ivr_studio%><br>
+        <%= select_tag "webapplication_sid", options_for_select(current_user.ivr_studios.all.collect{ |u| [u.name, u.webapplication_sid]},["select"]), {:class =>"form-control"} %></br>
+        <%= f.label :message_setting%><br>
+        <%= select_tag "message_webhook", raw("<option value='conversation'>Conversation</option><option value='select' selected='selected'>Select</option>"),{:class =>"form-control"}  %>
+        <%= f.submit :class=> "btn btn-primary btn-sm btn-block"%>
+    </div>
 <%end%>

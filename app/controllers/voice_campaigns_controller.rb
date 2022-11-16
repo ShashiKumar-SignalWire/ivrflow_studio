@@ -1,0 +1,2 @@
+class VoiceCampaignsController < ApplicationController
+end

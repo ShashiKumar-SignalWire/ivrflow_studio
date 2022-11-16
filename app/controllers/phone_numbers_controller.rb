@@ -1,7 +1,20 @@
 class PhoneNumbersController < ApplicationController
     def index
-        sw_client = Signalwire::REST::Client.new(current_user.sw_api_key.project_id, current_user.sw_api_key.token, signalwire_space_url: current_user.sw_api_key.space_url)
-        @phone_numbers = sw_client.incoming_phone_numbers
+        @phone_numbers=nil
+        if current_user.sw_api_key.nil?
+            flash[:info] = "Please add Signalwire Project details"
+            redirect_to root_path
+        else
+            sw_client = Signalwire::REST::Client.new(current_user.sw_api_key.project_id, current_user.sw_api_key.token, signalwire_space_url: current_user.sw_api_key.space_url)
+            sw_client_resp = sw_client.incoming_phone_numbers
+            begin
+                @phone_numbers = sw_client.incoming_phone_numbers.list
+            rescue => e
+                flash[:danger] = "Error Fetching Phone number Please check your Signalwire Project details"
+                redirect_to root_path
+            end
+
+        end
 
     end
     def show
@@ -14,7 +27,6 @@ class PhoneNumbersController < ApplicationController
         sw_client = Signalwire::REST::Client.new(current_user.sw_api_key.project_id, current_user.sw_api_key.token, signalwire_space_url: current_user.sw_api_key.space_url)
         @phone_number = sw_client.incoming_phone_numbers(params[:id]).fetch
         @default_webapplication_sid=nil
-        puts @phone_number.inspect
         if !@phone_number.voice_application_sid.nil?
             webapp_sid= current_user.ivr_studios.find_by_webapplication_sid(@phone_number.voice_application_sid)
             if !webapp_sid.nil?

@@ -34,22 +34,27 @@ class IvrStudiosController < ApplicationController
     ivr_studio = current_user.ivr_studios.find_by_name(ivr_studio_params[:name])
     if ivr_studio.nil?
       sw_client = Signalwire::REST::Client.new(current_user.sw_api_key.project_id, current_user.sw_api_key.token, signalwire_space_url: current_user.sw_api_key.space_url)
-      
-      @ivr_studio = current_user.ivr_studios.new(ivr_studio_params)
-      respond_to do |format|
-        if @ivr_studio.save
-          application = sw_client.applications
-                      .create(
-                          friendly_name: "ivrstudio-" + ivr_studio_params[:name],
-                          voice_url: webhook_url + "ivr_studio_webhook/"+@ivr_studio.id.to_s+"/1"
-                        )
-          @ivr_studio.update(:webapplication_sid => ivr_studio_params[:webapplication_sid]=application.sid)
-          format.html { redirect_to ivr_studio_url(@ivr_studio), success: "Ivr studio successfully created." }
-          format.json { render :show, status: :created, location: @ivr_studio }
-        else
-          format.html { render :new, status: :unprocessable_entity }
-          format.json { render json: @ivr_studio.errors, status: :unprocessable_entity }
+      begin
+        @ivr_studio = current_user.ivr_studios.new(ivr_studio_params)
+        respond_to do |format|
+          
+          if @ivr_studio.save
+            application = sw_client.applications
+                        .create(
+                            friendly_name: "ivrstudio-" + ivr_studio_params[:name],
+                            voice_url: @webhook_url + "ivr_studio_webhook/"+@ivr_studio.id.to_s+"/1"
+                          )
+            @ivr_studio.update(:webapplication_sid => ivr_studio_params[:webapplication_sid]=application.sid)
+            format.html { redirect_to ivr_studio_url(@ivr_studio), success: "Ivr studio successfully created." , turbolinks: false}
+            format.json { render :show, status: :created, location: @ivr_studio }
+          else
+            format.html { render :new, status: :unprocessable_entity }
+            format.json { render json: @ivr_studio.errors, status: :unprocessable_entity }
+          end
         end
+      rescue => e
+        flash[:danger] = "Error creating IVR Studio, Please check your Signalwire Project details"
+        redirect_to root_path 
       end
     else
       flash[:warning] = ivr_studio_params[:name] + " Name already exists"
@@ -165,7 +170,7 @@ class IvrStudiosController < ApplicationController
                 end
                 break
               end
-              if(node['name'] == 'DialSuccess' && ["success", "answered", "completed"].include?(params["DialCallStatu"]))
+              if(node['name'] == 'DialSuccess' && ["success", "answered", "completed"].include?(params["DialCallStatus"]))
                 response = Twilio::TwiML::VoiceResponse.new
                 response.redirect('/ivr_studio_webhook/' + @ivr_studio.id.to_s + "/" +node['id'].to_s, method: 'POST')
                 break
@@ -255,8 +260,11 @@ class IvrStudiosController < ApplicationController
   # DELETE /ivr_studios/1 or /ivr_studios/1.json
   def destroy
     if !@ivr_studio.webapplication_sid.nil?
-      sw_client = Signalwire::REST::Client.new(current_user.sw_api_key.project_id, current_user.sw_api_key.token, signalwire_space_url: current_user.sw_api_key.space_url)
-      sw_client.applications(@ivr_studio.webapplication_sid).delete
+      begin
+        sw_client = Signalwire::REST::Client.new(current_user.sw_api_key.project_id, current_user.sw_api_key.token, signalwire_space_url: current_user.sw_api_key.space_url)
+        sw_client.applications(@ivr_studio.webapplication_sid).delete
+      rescue =>e
+      end
     end
     @ivr_studio.destroy
 

@@ -1,17 +1,24 @@
-<h3 class="text-muted mb-0">
+<h5 class="fw-semibold mb-0">
   Conversations
-</h3>
+</h5>
 
 <hr class="mt-1">
 
-<% if @conversations.present? %>
-  <nav class="nav flex-column">
-    <% @conversations.each do |conversation| %>
-      <a class="" href="<%= conversation_path(conversation) %>" method='get' data-turbo="false"><%= Contact.find(conversation.contact_id).name%></a>
-    <% end %>
-  </nav>
-<% else %>
-  <div class="text-muted">
-    The are no conversations
-  </div>
-<% end %>
+<div class="col-sm-3 chat_contact">
+    <div style="height: 100%; overflow-y: auto; overflow-x: hidden">
+        <ul class="contact_list">
+        <% @conversations.each do |conversation| %>
+            <li>
+                <div class="clearfix">
+                    <h5 class="pull-left mb-0 mt-0 new_msg">
+                    
+                    <a class="pull-left mb-0 mt-0 new_msg" href="<%= conversation_path(conversation) %>" method='get' data-turbo="false"><%= Contact.find(conversation.contact_id).name%></a>
+                    </h5>
+                </div>
+                <p><%= Contact.find(conversation.contact_id).number %></p>
+            </li>
+            <% end %>
+        </ul>
+
+    </div>
+</div>
